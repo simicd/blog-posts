@@ -1,0 +1,8 @@
+{
+  "include": ["jupyter-to-vscode"],
+  "executionEnvironments": [
+    {
+      "root": "jupyter-to-vscode"
+    }
+  ]
+}

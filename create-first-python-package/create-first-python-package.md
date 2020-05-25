@@ -120,11 +120,11 @@ And that's it! You can validate if it worked out by opening the `main.py` file a
 Now that we have set up the basic package structure, it's time to run the code. One big difference between Jupyter and VS Code is that VS Code has a debugger. This means that you can stop the code in any given line and inspect it.
 
 1. Go to the debug/run menu in the sidebar and select *create a launch.json file* (only required for the very first time) and then select *Python File* from the dropdown.
-   ![](images/setup-debugger.png)
+   ![Set up debugger](images/setup-debugger.png)
 2. You can set so-called breakpoints (red dot) by clicking to the left of the line number. This will tell the debugger to stop and wait there. You can start the execution with F5 or by clicking on the start button:
-   ![](images/run-debugger.png)
+   ![Set breakpoint and execute code](images/run-debugger.png)
 3. The debugger will stop at your breakpoint. You can continue execution (first button on the top right) or line by line (second button). While at the breakpoint you can inspect variables (top left) or write code in the Debug Console (bottom).
-    ![](images/debugger-highlights.png)
+    ![Inspect code at breakpoint](images/debugger-highlights.png)
 
 If everything went well, your code will run until the end and produce the same outputs as with the Jupyter notebook!
 

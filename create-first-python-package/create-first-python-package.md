@@ -104,7 +104,7 @@ projectName/
 ```
 
 ### Step three: Turn your Jupyter Notebook into a .py file 📜
-Luckily, VS Code provides a convenient way to turn your notebook into a Python module. I will use a script I have written which downloads a bunch of files and unzips them. (TODO: UPLOAD/SHARE SCRIPT)
+Luckily, VS Code provides a convenient way to turn your notebook into a Python module. I will [use a script](https://github.com/simicd/blog-posts/tree/master/create-first-python-package/scripts) I have written which downloads a bunch of files and unzips the files.
 
 1. Open your notebook (.ipynb file) in VS Code by copying it somewhere into your project folder (in my case `scripts/download-eiopa-rates.ipynb`) and then clicking on the `.ipynb`. VS Code will open the built-in notebook view:
    ![VS Code Notebook view](images/export-as-py-file-vscode.png)
@@ -136,6 +136,7 @@ If everything went well, your code will run until the end and produce the same o
 1. Open your Jupyter Notebook in VS Code and store your code as `.py` file in the package folder
 1. Set up and call your package in `main.py` using the VS Code debugger
 
+You can find the complete example [here](https://github.com/simicd/blog-posts/tree/master/create-first-python-package) 📚
 
 ## Next steps ⭐️
 Now we still have the entire codebase in one large module. In the next step we will write functions and turn the module into smaller chunks.

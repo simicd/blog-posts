@@ -1,8 +1,7 @@
 {
-  "include": ["jupyter-to-vscode"],
   "executionEnvironments": [
     {
-      "root": "jupyter-to-vscode"
+      "root": "create-first-python-package"
     }
   ]
 }

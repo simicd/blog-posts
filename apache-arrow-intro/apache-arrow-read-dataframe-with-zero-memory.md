@@ -4,13 +4,13 @@
 
 Last week I saw a tweet from Wes McKinney, probably best known as the creator of the awesome pandas package:
 
-[https://twitter.com/wesmckinn/status/1272641133168992256?s=20](https://twitter.com/wesmckinn/status/1272641133168992256?s=20)
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">&quot;The future is already here – it&#39;s just not evenly distributed.&quot; - <a href="https://twitter.com/GreatDismal?ref_src=twsrc%5Etfw">@GreatDismal</a> <a href="https://t.co/WIJWnrC6ya">https://t.co/WIJWnrC6ya</a></p>&mdash; Wes McKinney (@wesmckinn) <a href="https://twitter.com/wesmckinn/status/1272641133168992256?ref_src=twsrc%5Etfw">June 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 So, when I saw him quoting William Gibson, I thought there must be something amazing going on. I was not disappointed.
 
 The tweet at the start of the chain was about [Hugging Face](https://github.com/huggingface/nlp), a natural-language processing library. The project collects datasets that can be used for training & benchmarking of models. And some of these datasets are huge. In the initial tweet, [Thomas Wolf](https://twitter.com/Thom_Wolf) points out that with a special file format, he and [Quentin Lhoest](https://twitter.com/qlhoest) are now able to iterate through 17GB of data in less than a minute with a RAM footprint of 9MB 🤯
 
-[https://twitter.com/Thom_Wolf/status/1272512974935203841?s=20](https://twitter.com/Thom_Wolf/status/1272512974935203841?s=20)
+<blockquote class="twitter-tweet"><p lang="en" dir="ltr">There is a bit of magic in the new 🤗nlp library besides giving dead-simple access to 120+ datasets🧙‍♂️<br><br>We&#39;ve tested it with <a href="https://twitter.com/qlhoest?ref_src=twsrc%5Etfw">@qlhoest</a> and loading a 17GB+ dataset like English Wikipedia only takes... 9MB in RAM🐣<br><br>And you can iterate over the data at 2-3 Gbit/s🚀<br><br>Try it yourself👇 <a href="https://t.co/wx7x7fzhqf">pic.twitter.com/wx7x7fzhqf</a></p>&mdash; Thomas Wolf (@Thom_Wolf) <a href="https://twitter.com/Thom_Wolf/status/1272512974935203841?ref_src=twsrc%5Etfw">June 15, 2020</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
 
 The first question that came to my mind: How? What magic is going on here?
 

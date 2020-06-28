@@ -21,9 +21,11 @@ Since there aren’t many practical examples online, I decided to write an intro
 > *Any sufficiently advanced technology is indistinguishable from magic.* 
 — Arthur C. Clarke, 3rd law
 
-[https://cdn-images-1.medium.com/max/1263/0*ZRVNlpQcBmoFQhIi](https://cdn-images-1.medium.com/max/1263/0*ZRVNlpQcBmoFQhIi)
+<figure>
+  <img src="https://cdn-images-1.medium.com/max/1263/0*ZRVNlpQcBmoFQhIi" alt="Title image"/>
+  <figcaption>Photo by <a href="https://unsplash.com/@sortino?utm_source=medium&utm_medium=referral">Joshua Sortino</a> on <a href="https://unsplash.com/?utm_source=medium&utm_medium=referral">Unsplash</a></figcaption>
+</figure>
 
-Photo by [Joshua Sortino](https://unsplash.com/@sortino?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=medium&utm_medium=referral)
 
 ## Exchanging data smoothly
 
@@ -35,13 +37,18 @@ The first clue was [Thomas Wolf referring to Apache Arrow](https://twitter.com/T
 
 Before Arrow, the standard way of exchanging data between any application or library was to store it to disk in one way or the other. So if a .NET Core library wants to pass the data to Python for data analysis, chances were that someone would write out a file (e.g. csv, json, Parquet, …) and then read it in again with Python. Both steps, the writing (serialization) and reading (deserialization) are costly and slow — and the bigger the dataset, the longer it takes to complete each of them.
 
-![https://cdn-images-1.medium.com/max/842/1*y91R8olNxaJ2c0f6adltSA.png](https://cdn-images-1.medium.com/max/842/1*y91R8olNxaJ2c0f6adltSA.png)
+<figure>
+  <img src="./images/illustration-before-arrow.png" alt="Before Apache Arrow"/>
+</figure>
+
 
 What if there was a way to exchange the data directly via handshake and zero copying? It could look like this: .NET would start chatting with Python, point to a pile of data in memory and be like: *Hey pal, this is yours now*. And Python could directly jump onto it without carting it from one place to another. Wouldn’t that be fantastic?
 
 That’s what Apache Arrow is all about.
 
-![https://cdn-images-1.medium.com/max/842/1*JTFSnH3uKTqbr2kKvXO4HQ.png](https://cdn-images-1.medium.com/max/842/1*JTFSnH3uKTqbr2kKvXO4HQ.png)
+<figure>
+  <img src="./images/illustration-after-arrow.png" alt="After Apache Arrow"/>
+</figure>
 
 ### Is Parquet the secret?
 
@@ -50,7 +57,7 @@ That left me wondering — how can I use Arrow? By looking at the source cod
 Traditionally, data is stored on disk in a row-by-row manner. Columnar storage was born out of the necessity to analyze large datasets and aggregate them efficiently. Data analytics is less interested in rows of data (e.g. one customer transaction, one call log, …) but on aggregations thereof (e.g. total amount spent by customer, total call minutes by region, …).
 
 <figure>
-  <img src="https://cdn-images-1.medium.com/max/842/1*5Gv3dHPAcEIv1COIc6z43w.png" alt="my alt text"/>
+  <img src="./images/example-row-vs-column-oriented-storage.png" alt="Row vs column oriented storage"/>
   <figcaption>Row vs column oriented storage (Adapted from [4] with <a href="https://github.com/allisonhorst/palmerpenguins">Palmer Station Penguin dataset</a>)</figcaption>
 </figure>
 
@@ -126,7 +133,7 @@ Note that Arrow can only be converted to pandas without allocating memory (= zer
 The resulting file sizes are:
 
 <figure>
-  <img src="https://cdn-images-1.medium.com/max/842/1*astKY3Pma45aanVYV0_VVg.png" alt="File size comparison"/>
+  <img src="./images/chart-file-size.png" alt="File size comparison"/>
   <figcaption>File size comparison</figcaption>
 </figure>
 
@@ -148,7 +155,7 @@ Now the key part: Reading performance. How long does it take to calculate averag
 Timing each of the three functions, the following results arise:
 
 <figure>
-  <img src="https://cdn-images-1.medium.com/max/842/1*Afiv3FZUzfFA0fdjMbQRjQ.png" alt="Performance comparison: Time required to read column & calculate average"/>
+  <img src="./images/chart-reading-time.png" alt="Performance comparison: Time required to read column & calculate average"/>
   <figcaption>Performance comparison: Time required to read column & calculate average</figcaption>
 </figure>
 
@@ -172,7 +179,7 @@ To answer that let’s look at the memory consumption. How much RAM is each file
 Here are the results:
 
 <figure>
-  <img src="https://cdn-images-1.medium.com/max/842/1*x1SQa_GU1yiDvThcYwe8-A.png" alt="Performance comparison: Memory consumed to read column"/>
+  <img src="./images/chart-memory-consumption.png" alt="Performance comparison: Memory consumed to read column"/>
   <figcaption>Performance comparison: Memory consumed to read column</figcaption>
 </figure>
 

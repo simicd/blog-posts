@@ -22,7 +22,7 @@ Since there aren’t many practical examples online, I decided to write an intro
 — Arthur C. Clarke, 3rd law
 
 <figure>
-  <img src="https://cdn-images-1.medium.com/max/1263/0*ZRVNlpQcBmoFQhIi" alt="Title image"/>
+  <img src="./images/title-image.jpg" alt="Title image"/>
   <figcaption>Photo by <a href="https://unsplash.com/@sortino?utm_source=medium&utm_medium=referral">Joshua Sortino</a> on <a href="https://unsplash.com/?utm_source=medium&utm_medium=referral">Unsplash</a></figcaption>
 </figure>
 
@@ -116,7 +116,8 @@ In short, applications can directly operate on a dataset stored on disk without 
 
 Now let’s explore these data formats. As a sample dataset I’m using the [Palmer Station Penguin dataset](https://github.com/allisonhorst/palmerpenguins). Since it only contains 350 rows, I’ll resample it to 1 million so that the performance difference becomes more apparent:
 
-[https://gist.github.com/simicd/fda4d5a4ebcd485a7d66c94d8ecaa013](https://gist.github.com/simicd/fda4d5a4ebcd485a7d66c94d8ecaa013)
+<script src="https://gist.github.com/simicd/fda4d5a4ebcd485a7d66c94d8ecaa013.js"></script>
+[Prepare dataset](https://gist.github.com/simicd/fda4d5a4ebcd485a7d66c94d8ecaa013)
 
 ### Writing the files
 
@@ -128,7 +129,9 @@ As a next step I write the files to disk in three formats:
 
 Note that Arrow can only be converted to pandas without allocating memory (= zero-copy) under certain conditions. One of them: There must be no NaN values. To compare the performance between with & without zero-copying, I write the Arrow file once with and without missing numeric values.
 
-[https://gist.github.com/simicd/98cccac6b87a393646d5ce200252edcc](https://gist.github.com/simicd/98cccac6b87a393646d5ce200252edcc)
+<script src="https://gist.github.com/simicd/98cccac6b87a393646d5ce200252edcc.js"></script>
+[Write files](https://gist.github.com/simicd/98cccac6b87a393646d5ce200252edcc)
+
 
 The resulting file sizes are:
 
@@ -150,7 +153,9 @@ Now the key part: Reading performance. How long does it take to calculate averag
 - Arrow as memory-map API (`memory_map(...)`) with missing values/NaN
 - Arrow as memory-map API (`memory_map(...)`) without missing values
 
-[https://gist.github.com/simicd/72815e7f639502d35047541c80773d8a](https://gist.github.com/simicd/72815e7f639502d35047541c80773d8a)
+<script src="https://gist.github.com/simicd/72815e7f639502d35047541c80773d8a.js"></script>
+[Reading time](https://gist.github.com/simicd/72815e7f639502d35047541c80773d8a)
+
 
 Timing each of the three functions, the following results arise:
 
@@ -174,7 +179,9 @@ What’s surprising: Arrow with the file API is even slower than Parquet. What�
 
 To answer that let’s look at the memory consumption. How much RAM is each file consuming if we read a single column?
 
-[https://gist.github.com/simicd/d700b557be69127fb57d7d81dd405c75](https://gist.github.com/simicd/d700b557be69127fb57d7d81dd405c75)
+<script src="https://gist.github.com/simicd/d700b557be69127fb57d7d81dd405c75.js"></script>
+[Memory consumption](https://gist.github.com/simicd/d700b557be69127fb57d7d81dd405c75)
+
 
 Here are the results:
 

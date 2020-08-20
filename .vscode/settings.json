@@ -1,4 +1,9 @@
 {
   "python.dataScience.jupyterServerURI": "local",
-  "python.autoComplete.extraPaths": ["jupyter-to-vscode"]
+  "python.autoComplete.extraPaths": [
+    "jupyter-to-vscode"
+  ],
+  "python.analysis.extraPaths": [
+    "jupyter-to-vscode"
+  ]
 }

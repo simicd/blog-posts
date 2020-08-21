@@ -11,9 +11,10 @@ In modern web applications, data and functionality is frequently accessible thro
 
 As you can imagine, it requires some effort to apply all these steps consistently. Sometimes I omitted catching the error, other times forgot checking the response code before extracting, etc. So I set out to write a custom hook performing all these steps. There were several challenges on the way. Finding solutions taught me a lot about hooks. With this blog post, I want to share both the problems I encountered as well as how to solve them.
 
-[https://cdn-images-1.medium.com/max/2600/0*el6CwKbutZMnxX46](https://cdn-images-1.medium.com/max/2600/0*el6CwKbutZMnxX46)
-
-Photo by [Jannes Glas](https://unsplash.com/@jannesglas?utm_source=medium&utm_medium=referral) on [Unsplash](https://unsplash.com/?utm_source=medium&utm_medium=referral)
+<figure>
+  <img src="./images/title-image.jpg" alt="Title image"/>
+  <figcaption>Photo by <a href="(https://unsplash.com/@jannesglas?utm_source=medium&utm_medium=referral">Jannes Glas</a> on <a href="https://unsplash.com/?utm_source=medium&utm_medium=referral">Unsplash</a></figcaption>
+</figure>
 
 ## Starting point
 
@@ -23,7 +24,9 @@ Before I started extracting the functionality into a hook, code similar to this 
 
 I’ll use this example throughout the blog post and explain the purpose of the individual blocks (familiarity with state hook, effect hook and React in general are expected). Since the API is open to anyone, you can follow along and replicate each step. The component will return a random image from the fantastic [Dog API](https://dog.ceo/dog-api/) 🐶:
 
-![https://cdn-images-1.medium.com/max/1263/1*Zu0OBqTi_3-Kvf_WFXSa_Q.png](https://cdn-images-1.medium.com/max/1263/1*Zu0OBqTi_3-Kvf_WFXSa_Q.png)
+<figure>
+  <img src="./images/dog-image-component.png" alt="React Component with Dog Image"/>
+</figure>
 
 Note that I’m using TypeScript — if you prefer JavaScript strip away the type definitions (e.g. `string`, `interface` blocks, …). For your convenience, the final hook is stored [here in TypeScript](https://gist.github.com/simicd/02ce79612d0971441b33b7c816930d8e) and [JavaScript](https://gist.github.com/simicd/bbf37fe119c7b344634e4d47d2709fea).
 
@@ -44,7 +47,9 @@ A few things to note here:
 
 If you run the code above you will run into an error. useEffect does not accept asynchronous functions!
 
-![https://cdn-images-1.medium.com/max/1263/1*ValbxncMNjMxQEjasOr2eA.png](https://cdn-images-1.medium.com/max/1263/1*ValbxncMNjMxQEjasOr2eA.png)
+<figure>
+  <img src="./images/useeffect-async-error.png" alt="Async error"/>
+</figure>
 
 The well-accepted workaround: Define the async function within a synchronous one and call it immediately:
 
@@ -58,7 +63,9 @@ The custom hook should work now & can be called in the component. Much cleaner!
 
 First issue resolved — but the next one awaits already. The compiler will return a warning: `url` and `init` have to be specified as dependencies.
 
-![https://cdn-images-1.medium.com/max/1263/1*4W6EDZtSUm1yk49JzQqWZA.png](https://cdn-images-1.medium.com/max/1263/1*4W6EDZtSUm1yk49JzQqWZA.png)
+<figure>
+  <img src="./images/useeffect-specify-dependencies.png" alt="Specify dependencies error"/>
+</figure>
 
 Why is that? The `fetch()` function in the effect hook depends on these two parameters. However, they are not created within the scope of the hook. With an empty array, it will run once when component is initialized and then never again. But what if `url` or `init` change?
 
@@ -83,7 +90,9 @@ useEffect seems not to perform a content check for objects. Instead it treats ea
 
 - Explicitly check for individual keys of the object (e.g. `init.headers`, `init.body`, ...). There is a dozen of keys and some of them are objects themselves. Won’t work.
 
-    ![https://cdn-images-1.medium.com/max/1263/1*QMnWicYTVpifCcKv--joHg.png](https://cdn-images-1.medium.com/max/1263/1*QMnWicYTVpifCcKv--joHg.png)
+    <figure>
+      <img src="./images/useeffect-object-dependencies.png" alt="List of properties in init"/>
+    </figure>
 
 - Use `Object.values(init)` to extract all values of an object. This is better than the previous option since one wouldn't need to type out all keys of `init`. But again, not all values of `init` are primitive types. This would still result in an infinite loop.
 
@@ -95,7 +104,9 @@ Work-around: Stringify objects with `JSON.stringify(init)`. If the object doesn'
 
 Next problem: The linter spits out a warning that complex evaluations are not allowed in the dependency list.
 
-![https://cdn-images-1.medium.com/max/1263/1*zTVRzavS2FM2_4wYmvrDEA.png](https://cdn-images-1.medium.com/max/1263/1*zTVRzavS2FM2_4wYmvrDEA.png)
+<figure>
+  <img src="./images/useeffect-no-complex-evaluations.png" alt="List of properties in init"/>
+</figure>
 
 By moving the evaluation before the effect hook and storing the two strings as variables, a familiar warning pops up again: `url` and `init` are dependencies and need to be part of the dependency array. Obviously the linter doesn't know that `stringifiedInit` belongs to `init`…
 
@@ -174,15 +185,3 @@ The hook runs successfully if the API request takes place at initialization. But
 ## Follow me on Twitter 🌠
 
 I’m regularly sharing tips about Python, React & Azure Cloud — if you are interested I’d be happy to [meet you on Twitter](https://twitter.com/simicdds) ✨
-
-## Run at initialization works! But what about on event?
-
-By jumping through all the hoops I had now a hook that worked at initialization. I was able to call it like this:
-
-[CODE]
-
-Works! Happily I tried to refactor one of the components that submitted a put request. Can you see the problem?
-
-Hooks must follow the same order on every render and must be deterministic - putting them into a function violates this principle. Back to the whiteboard.
-
-A custom hook builds on top of existing React hooks and is therefore subject to [the same rules as built-in hooks](https://reactjs.org/docs/hooks-rules.html).
